@@ -1,0 +1,113 @@
+{
+    "aws": {
+        "region": "us-east-1"
+    },
+    "rds": {
+        "db_instance_identifier": "capstone-g5-financial-analytics",
+        "engine": "sqlserver-se",
+        "db_instance_class": "db.t3.micro",
+        "allocated_storage": 20,
+        "port": 1433,
+        "publicly_accessible": true,
+        "backup_retention_period": 7,
+        "license_model": "license-included",
+	"master_db": "master",
+	"main_db": "financial_analytics"
+    },
+    "sql_server": {
+        "sql_files": [
+            "scripts\\1_database.sql",
+	    "scripts\\2_users.sql",
+	    "scripts\\3_schema_and_tables.sql",
+	    "scripts\\4_views.sql",
+            "scripts\\5_table_inserts.sql",
+	    "scripts\\6_performance_optimizations.sql"
+     
+        ],
+        "odbc_driver": "ODBC Driver 18 for SQL Server",
+    "sql_files_config": [
+    {
+        "file": "scripts\\1_database.sql",
+        "database": "master",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\2_schema.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\3_users.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\4_tables.sql",
+        "database": "",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\5_1_view.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\5_2_view.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\5_3_view.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\5_4_view.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\5_5_view.sql",
+        "database": "",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\5_6_view.sql",
+        "database": "financial_analytics",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\6_functions.sql",
+        "database": "",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\7_table_inserts.sql",
+        "database": "",
+        "user": "",
+        "password": ""
+    },
+    {
+        "file": "scripts\\8_performance_optimizations.sql",
+        "database": "",
+        "user": "",
+        "password": ""
+    }
+
+
+]
+
+
+    }
+}
