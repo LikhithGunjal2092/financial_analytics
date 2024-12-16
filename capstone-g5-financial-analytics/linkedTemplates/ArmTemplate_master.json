@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_db_financial_analytics'"
 		},
+		"source_financial_analytics_db_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'source_financial_analytics_db'"
+		},
+		"azure_staging_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
+		},
 		"source_db_financial_analytics_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "capstone-financial-analytics-db.cxeikoyuwfyj.us-east-1.rds.amazonaws.com"
@@ -22,6 +30,22 @@
 		"source_db_financial_analytics_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "admin"
+		},
+		"source_financial_analytics_db_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "capstone-financial-analytics-db.cxeikoyuwfyj.us-east-1.rds.amazonaws.com"
+		},
+		"source_financial_analytics_db_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "financial_analytics"
+		},
+		"source_financial_analytics_db_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin"
+		},
+		"azure_staging_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://faiitjgroup5.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -53,6 +77,12 @@
 					"source_db_financial_analytics_password": {
 						"value": "[parameters('source_db_financial_analytics_password')]"
 					},
+					"source_financial_analytics_db_password": {
+						"value": "[parameters('source_financial_analytics_db_password')]"
+					},
+					"azure_staging_accountKey": {
+						"value": "[parameters('azure_staging_accountKey')]"
+					},
 					"source_db_financial_analytics_properties_typeProperties_server": {
 						"value": "[parameters('source_db_financial_analytics_properties_typeProperties_server')]"
 					},
@@ -61,6 +91,18 @@
 					},
 					"source_db_financial_analytics_properties_typeProperties_userName": {
 						"value": "[parameters('source_db_financial_analytics_properties_typeProperties_userName')]"
+					},
+					"source_financial_analytics_db_properties_typeProperties_server": {
+						"value": "[parameters('source_financial_analytics_db_properties_typeProperties_server')]"
+					},
+					"source_financial_analytics_db_properties_typeProperties_database": {
+						"value": "[parameters('source_financial_analytics_db_properties_typeProperties_database')]"
+					},
+					"source_financial_analytics_db_properties_typeProperties_userName": {
+						"value": "[parameters('source_financial_analytics_db_properties_typeProperties_userName')]"
+					},
+					"azure_staging_properties_typeProperties_url": {
+						"value": "[parameters('azure_staging_properties_typeProperties_url')]"
 					}
 				}
 			},
