@@ -131,8 +131,7 @@
 								"sink": {
 									"type": "ParquetSink",
 									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings",
-										"copyBehavior": "FlattenHierarchy"
+										"type": "AzureBlobFSWriteSettings"
 									},
 									"formatSettings": {
 										"type": "ParquetWriteSettings"
@@ -157,7 +156,17 @@
 							"outputs": [
 								{
 									"referenceName": "Parquet1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"table_name": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
