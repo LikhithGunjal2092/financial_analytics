@@ -180,7 +180,7 @@
 						},
 						{
 							"name": "CopyStagingToWarehouse",
-							"type": "Copy",
+							"type": "Script",
 							"dependsOn": [
 								{
 									"activity": "CopySourceToStaging",
@@ -197,48 +197,19 @@
 								"secureInput": false
 							},
 							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "ParquetSource",
-									"storeSettings": {
-										"type": "AzureBlobFSReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "ParquetReadSettings"
-									}
-								},
-								"sink": {
-									"type": "SnowflakeSink",
-									"importSettings": {
-										"type": "SnowflakeImportCopyCommand"
-									}
-								},
-								"enableStaging": false
+							"linkedServiceName": {
+								"referenceName": "source_db_financial_analytics",
+								"type": "LinkedServiceReference"
 							},
-							"inputs": [
-								{
-									"referenceName": "Parquet1",
-									"type": "DatasetReference",
-									"parameters": {
-										"table_name": {
-											"value": "@item().table_name",
-											"type": "Expression"
-										},
-										"file_name": {
-											"value": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))",
-											"type": "Expression"
-										}
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "NonQuery",
+										"text": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))"
 									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "SnowflakeTables",
-									"type": "DatasetReference"
-								}
-							]
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}
