@@ -130,7 +130,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "select * from @{item().TableName} where date >'@{activity('LookupLastWatermark').output.firstRow.watermark}' and date <= '@{activity('LookupCurrentWatermark').output.firstRow.NewWatermarkValue}'",
+										"value": "select * from @{item().table_name} where date >'@{activity('LookupLastWatermark').output.firstRow.watermark}' and date <= '@{activity('LookupCurrentWatermark').output.firstRow.watermark}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
