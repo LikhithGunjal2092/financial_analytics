@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "capstone-g5-financial-analytics"
 		},
+		"azure_staging_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
+		},
 		"source_db_financial_analytics_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_db_financial_analytics'"
@@ -15,9 +19,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_financial_analytics_db'"
 		},
-		"azure_staging_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
+		"azure_staging_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://faiitjgroup5.dfs.core.windows.net/"
 		},
 		"source_db_financial_analytics_properties_typeProperties_server": {
 			"type": "string",
@@ -42,16 +46,29 @@
 		"source_financial_analytics_db_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "admin"
-		},
-		"azure_staging_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://faiitjgroup5.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/azure_staging')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('azure_staging_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('azure_staging_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/source_db_financial_analytics')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -91,23 +108,6 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('source_financial_analytics_db_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/azure_staging')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('azure_staging_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('azure_staging_accountKey')]"
 					}
 				}
 			},
@@ -555,10 +555,11 @@
 				"Policy": {
 					"recurrence": {
 						"frequency": "Minute",
-						"interval": 15
+						"interval": 1
 					},
 					"mode": "Microbatch"
 				},
+				"status": "Stopped",
 				"allowVNetOverride": false
 			},
 			"dependsOn": [

@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "capstone-g5-financial-analytics"
 		},
+		"azure_staging_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
+		},
 		"source_db_financial_analytics_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_db_financial_analytics'"
@@ -15,9 +19,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_financial_analytics_db'"
 		},
-		"azure_staging_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
+		"azure_staging_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://faiitjgroup5.dfs.core.windows.net/"
 		},
 		"source_db_financial_analytics_properties_typeProperties_server": {
 			"type": "string",
@@ -42,10 +46,6 @@
 		"source_financial_analytics_db_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "admin"
-		},
-		"azure_staging_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://faiitjgroup5.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -74,14 +74,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"azure_staging_accountKey": {
+						"value": "[parameters('azure_staging_accountKey')]"
+					},
 					"source_db_financial_analytics_password": {
 						"value": "[parameters('source_db_financial_analytics_password')]"
 					},
 					"source_financial_analytics_db_password": {
 						"value": "[parameters('source_financial_analytics_db_password')]"
 					},
-					"azure_staging_accountKey": {
-						"value": "[parameters('azure_staging_accountKey')]"
+					"azure_staging_properties_typeProperties_url": {
+						"value": "[parameters('azure_staging_properties_typeProperties_url')]"
 					},
 					"source_db_financial_analytics_properties_typeProperties_server": {
 						"value": "[parameters('source_db_financial_analytics_properties_typeProperties_server')]"
@@ -100,9 +103,6 @@
 					},
 					"source_financial_analytics_db_properties_typeProperties_userName": {
 						"value": "[parameters('source_financial_analytics_db_properties_typeProperties_userName')]"
-					},
-					"azure_staging_properties_typeProperties_url": {
-						"value": "[parameters('azure_staging_properties_typeProperties_url')]"
 					}
 				}
 			},

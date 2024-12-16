@@ -5,14 +5,17 @@
 		"factoryName": {
 			"value": "capstone-g5-financial-analytics"
 		},
+		"azure_staging_accountKey": {
+			"value": ""
+		},
 		"source_db_financial_analytics_password": {
 			"value": ""
 		},
 		"source_financial_analytics_db_password": {
 			"value": ""
 		},
-		"azure_staging_accountKey": {
-			"value": ""
+		"azure_staging_properties_typeProperties_url": {
+			"value": "https://faiitjgroup5.dfs.core.windows.net/"
 		},
 		"source_db_financial_analytics_properties_typeProperties_server": {
 			"value": "capstone-financial-analytics-db.cxeikoyuwfyj.us-east-1.rds.amazonaws.com"
@@ -31,9 +34,6 @@
 		},
 		"source_financial_analytics_db_properties_typeProperties_userName": {
 			"value": "admin"
-		},
-		"azure_staging_properties_typeProperties_url": {
-			"value": "https://faiitjgroup5.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"value": ""
