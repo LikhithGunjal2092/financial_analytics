@@ -40,6 +40,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('LookupControlTable').output.value",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "LookupCurrentWatermark",
