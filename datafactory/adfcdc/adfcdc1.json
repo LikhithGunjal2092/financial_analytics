@@ -1,0 +1,447 @@
+{
+	"name": "adfcdc1",
+	"properties": {
+		"SourceConnectionsInfo": [
+			{
+				"SourceEntities": [
+					{
+						"name": "dbo.stock_price_history",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "dbo"
+								},
+								{
+									"name": "tableName",
+									"value": "stock_price_history"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "date"
+								}
+							]
+						}
+					},
+					{
+						"name": "dbo.balance_sheet",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "dbo"
+								},
+								{
+									"name": "tableName",
+									"value": "balance_sheet"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "date"
+								}
+							]
+						}
+					},
+					{
+						"name": "dbo.cash_flow",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "dbo"
+								},
+								{
+									"name": "tableName",
+									"value": "cash_flow"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "date"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_stock_price_history",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "staging"
+								},
+								{
+									"name": "tableName",
+									"value": "vw_stock_price_history"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "formatted_date"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_income_statement",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "staging"
+								},
+								{
+									"name": "tableName",
+									"value": "vw_income_statement"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "date"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_balance_sheet",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "staging"
+								},
+								{
+									"name": "tableName",
+									"value": "vw_balance_sheet"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "formatted_date"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_cash_flow",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "schemaName",
+									"value": "staging"
+								},
+								{
+									"name": "tableName",
+									"value": "vw_cash_flow"
+								},
+								{
+									"name": "enableCdc",
+									"value": true
+								},
+								{
+									"name": "waterMarkColumn",
+									"value": "report_date"
+								}
+							]
+						}
+					}
+				],
+				"Connection": {
+					"linkedService": {
+						"referenceName": "source_financial_analytics_db",
+						"type": "LinkedServiceReference"
+					},
+					"linkedServiceType": "SqlServer",
+					"type": "linkedservicetype",
+					"isInlineDataset": true,
+					"commonDslConnectorProperties": [
+						{
+							"name": "allowSchemaDrift",
+							"value": true
+						},
+						{
+							"name": "inferDriftedColumnTypes",
+							"value": true
+						},
+						{
+							"name": "format",
+							"value": "table"
+						},
+						{
+							"name": "store",
+							"value": "sqlserver"
+						},
+						{
+							"name": "databaseType",
+							"value": "databaseType"
+						},
+						{
+							"name": "database",
+							"value": "database"
+						},
+						{
+							"name": "skipInitialLoad",
+							"value": true
+						}
+					]
+				}
+			}
+		],
+		"TargetConnectionsInfo": [
+			{
+				"TargetEntities": [
+					{
+						"name": "dbo.stock_price_history",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "dbo.stock_price_history"
+								},
+								{
+									"name": "fileSystem",
+									"value": "dbo.stock_price_history"
+								}
+							]
+						}
+					},
+					{
+						"name": "dbo.balance_sheet",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "dbo.balance_sheet"
+								},
+								{
+									"name": "fileSystem",
+									"value": "dbo.balance_sheet"
+								}
+							]
+						}
+					},
+					{
+						"name": "dbo.cash_flow",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "dbo.cash_flow"
+								},
+								{
+									"name": "fileSystem",
+									"value": "dbo.cash_flow"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_stock_price_history",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "staging.vw_stock_price_history"
+								},
+								{
+									"name": "fileSystem",
+									"value": "staging.vw_stock_price_history"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_income_statement",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "staging.vw_income_statement"
+								},
+								{
+									"name": "fileSystem",
+									"value": "staging.vw_income_statement"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_balance_sheet",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "staging.vw_balance_sheet"
+								},
+								{
+									"name": "fileSystem",
+									"value": "staging.vw_balance_sheet"
+								}
+							]
+						}
+					},
+					{
+						"name": "staging.vw_cash_flow",
+						"properties": {
+							"schema": [],
+							"dslConnectorProperties": [
+								{
+									"name": "container",
+									"value": "staging.vw_cash_flow"
+								},
+								{
+									"name": "fileSystem",
+									"value": "staging.vw_cash_flow"
+								}
+							]
+						}
+					}
+				],
+				"Connection": {
+					"linkedService": {
+						"referenceName": "azure_staging",
+						"type": "LinkedServiceReference"
+					},
+					"linkedServiceType": "AzureBlobFS",
+					"type": "linkedservicetype",
+					"isInlineDataset": true,
+					"commonDslConnectorProperties": [
+						{
+							"name": "allowSchemaDrift",
+							"value": true
+						},
+						{
+							"name": "inferDriftedColumnTypes",
+							"value": true
+						},
+						{
+							"name": "format",
+							"value": "parquet"
+						}
+					]
+				},
+				"DataMapperMappings": [
+					{
+						"targetEntityName": "dbo.balance_sheet",
+						"sourceEntityName": "dbo.balance_sheet",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					},
+					{
+						"targetEntityName": "dbo.cash_flow",
+						"sourceEntityName": "dbo.cash_flow",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					},
+					{
+						"targetEntityName": "dbo.stock_price_history",
+						"sourceEntityName": "dbo.stock_price_history",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					},
+					{
+						"targetEntityName": "staging.vw_balance_sheet",
+						"sourceEntityName": "staging.vw_balance_sheet",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					},
+					{
+						"targetEntityName": "staging.vw_cash_flow",
+						"sourceEntityName": "staging.vw_cash_flow",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					},
+					{
+						"targetEntityName": "staging.vw_income_statement",
+						"sourceEntityName": "staging.vw_income_statement",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					},
+					{
+						"targetEntityName": "staging.vw_stock_price_history",
+						"sourceEntityName": "staging.vw_stock_price_history",
+						"sourceConnectionReference": {
+							"connectionName": "source_financial_analytics_db",
+							"type": "linkedservicetype"
+						},
+						"attributeMappingInfo": {
+							"attributeMappings": []
+						}
+					}
+				],
+				"Relationships": []
+			}
+		],
+		"Policy": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15
+			},
+			"mode": "Microbatch"
+		},
+		"allowVNetOverride": false
+	}
+}
