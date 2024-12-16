@@ -125,6 +125,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
+									"sqlReaderQuery": {
+										"value": "select * from @{item().TableName} where date >'@{activity('LookupLastWatermark').output.firstRow.watermark}' and date <= '@{activity('LookupCurrentWatermark').output.firstRow.NewWatermarkValue}'",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
