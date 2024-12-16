@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_financial_analytics_db'"
 		},
+		"snowflake_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'snowflake_ls'"
+		},
 		"azure_staging_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://faiitjgroup5.dfs.core.windows.net/"
@@ -114,458 +118,66 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/adfcdc1')]",
-			"type": "Microsoft.DataFactory/factories/adfcdcs",
+			"name": "[concat(parameters('factoryName'), '/source_control_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"SourceConnectionsInfo": [
-					{
-						"SourceEntities": [
-							{
-								"name": "dbo.stock_price_history",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "dbo"
-										},
-										{
-											"name": "tableName",
-											"value": "stock_price_history"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "date"
-										}
-									]
-								}
-							},
-							{
-								"name": "dbo.balance_sheet",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "dbo"
-										},
-										{
-											"name": "tableName",
-											"value": "balance_sheet"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "date"
-										}
-									]
-								}
-							},
-							{
-								"name": "dbo.cash_flow",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "dbo"
-										},
-										{
-											"name": "tableName",
-											"value": "cash_flow"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "date"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_stock_price_history",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "staging"
-										},
-										{
-											"name": "tableName",
-											"value": "vw_stock_price_history"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "formatted_date"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_income_statement",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "staging"
-										},
-										{
-											"name": "tableName",
-											"value": "vw_income_statement"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "date"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_balance_sheet",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "staging"
-										},
-										{
-											"name": "tableName",
-											"value": "vw_balance_sheet"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "formatted_date"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_cash_flow",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "schemaName",
-											"value": "staging"
-										},
-										{
-											"name": "tableName",
-											"value": "vw_cash_flow"
-										},
-										{
-											"name": "enableCdc",
-											"value": true
-										},
-										{
-											"name": "waterMarkColumn",
-											"value": "report_date"
-										}
-									]
-								}
-							}
-						],
-						"Connection": {
-							"linkedService": {
-								"referenceName": "source_financial_analytics_db",
-								"type": "LinkedServiceReference"
-							},
-							"linkedServiceType": "SqlServer",
-							"type": "linkedservicetype",
-							"isInlineDataset": true,
-							"commonDslConnectorProperties": [
-								{
-									"name": "allowSchemaDrift",
-									"value": true
-								},
-								{
-									"name": "inferDriftedColumnTypes",
-									"value": true
-								},
-								{
-									"name": "format",
-									"value": "table"
-								},
-								{
-									"name": "store",
-									"value": "sqlserver"
-								},
-								{
-									"name": "databaseType",
-									"value": "databaseType"
-								},
-								{
-									"name": "database",
-									"value": "database"
-								},
-								{
-									"name": "skipInitialLoad",
-									"value": true
-								}
-							]
-						}
-					}
-				],
-				"TargetConnectionsInfo": [
-					{
-						"TargetEntities": [
-							{
-								"name": "dbo.stock_price_history",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "dbo.stock_price_history"
-										},
-										{
-											"name": "fileSystem",
-											"value": "dbo.stock_price_history"
-										}
-									]
-								}
-							},
-							{
-								"name": "dbo.balance_sheet",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "dbo.balance_sheet"
-										},
-										{
-											"name": "fileSystem",
-											"value": "dbo.balance_sheet"
-										}
-									]
-								}
-							},
-							{
-								"name": "dbo.cash_flow",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "dbo.cash_flow"
-										},
-										{
-											"name": "fileSystem",
-											"value": "dbo.cash_flow"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_stock_price_history",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "staging.vw_stock_price_history"
-										},
-										{
-											"name": "fileSystem",
-											"value": "staging.vw_stock_price_history"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_income_statement",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "staging.vw_income_statement"
-										},
-										{
-											"name": "fileSystem",
-											"value": "staging.vw_income_statement"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_balance_sheet",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "staging.vw_balance_sheet"
-										},
-										{
-											"name": "fileSystem",
-											"value": "staging.vw_balance_sheet"
-										}
-									]
-								}
-							},
-							{
-								"name": "staging.vw_cash_flow",
-								"properties": {
-									"schema": [],
-									"dslConnectorProperties": [
-										{
-											"name": "container",
-											"value": "staging.vw_cash_flow"
-										},
-										{
-											"name": "fileSystem",
-											"value": "staging.vw_cash_flow"
-										}
-									]
-								}
-							}
-						],
-						"Connection": {
-							"linkedService": {
-								"referenceName": "azure_staging",
-								"type": "LinkedServiceReference"
-							},
-							"linkedServiceType": "AzureBlobFS",
-							"type": "linkedservicetype",
-							"isInlineDataset": true,
-							"commonDslConnectorProperties": [
-								{
-									"name": "allowSchemaDrift",
-									"value": true
-								},
-								{
-									"name": "inferDriftedColumnTypes",
-									"value": true
-								},
-								{
-									"name": "format",
-									"value": "parquet"
-								}
-							]
-						},
-						"DataMapperMappings": [
-							{
-								"targetEntityName": "dbo.balance_sheet",
-								"sourceEntityName": "dbo.balance_sheet",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							},
-							{
-								"targetEntityName": "dbo.cash_flow",
-								"sourceEntityName": "dbo.cash_flow",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							},
-							{
-								"targetEntityName": "dbo.stock_price_history",
-								"sourceEntityName": "dbo.stock_price_history",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							},
-							{
-								"targetEntityName": "staging.vw_balance_sheet",
-								"sourceEntityName": "staging.vw_balance_sheet",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							},
-							{
-								"targetEntityName": "staging.vw_cash_flow",
-								"sourceEntityName": "staging.vw_cash_flow",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							},
-							{
-								"targetEntityName": "staging.vw_income_statement",
-								"sourceEntityName": "staging.vw_income_statement",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							},
-							{
-								"targetEntityName": "staging.vw_stock_price_history",
-								"sourceEntityName": "staging.vw_stock_price_history",
-								"sourceConnectionReference": {
-									"connectionName": "source_financial_analytics_db",
-									"type": "linkedservicetype"
-								},
-								"attributeMappingInfo": {
-									"attributeMappings": []
-								}
-							}
-						],
-						"Relationships": []
-					}
-				],
-				"Policy": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 1
-					},
-					"mode": "Microbatch"
+				"linkedServiceName": {
+					"referenceName": "source_db_financial_analytics",
+					"type": "LinkedServiceReference"
 				},
-				"status": "Stopped",
-				"allowVNetOverride": false
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "table_name",
+						"type": "varchar"
+					},
+					{
+						"name": "join_key",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "datafactory",
+					"table": "control_table"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/source_financial_analytics_db')]",
-				"[concat(variables('factoryId'), '/linkedServices/azure_staging')]"
+				"[concat(variables('factoryId'), '/linkedServices/source_db_financial_analytics')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/snowflake_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Snowflake",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"connectionString": "[parameters('snowflake_ls_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_to_staging')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
 		}
 	]
 }
