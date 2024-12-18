@@ -8,13 +8,13 @@
 		"azure_staging_accountKey": {
 			"value": ""
 		},
+		"snowflake_ls_connectionString": {
+			"value": ""
+		},
 		"source_db_financial_analytics_password": {
 			"value": ""
 		},
 		"source_financial_analytics_db_password": {
-			"value": ""
-		},
-		"snowflake_ls_connectionString": {
 			"value": ""
 		},
 		"azure_staging_properties_typeProperties_url": {

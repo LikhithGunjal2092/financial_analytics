@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
 		},
+		"snowflake_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'snowflake_ls'"
+		},
 		"source_db_financial_analytics_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_db_financial_analytics'"
@@ -18,10 +22,6 @@
 		"source_financial_analytics_db_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_financial_analytics_db'"
-		},
-		"snowflake_ls_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'snowflake_ls'"
 		},
 		"azure_staging_properties_typeProperties_url": {
 			"type": "string",
@@ -81,14 +81,14 @@
 					"azure_staging_accountKey": {
 						"value": "[parameters('azure_staging_accountKey')]"
 					},
+					"snowflake_ls_connectionString": {
+						"value": "[parameters('snowflake_ls_connectionString')]"
+					},
 					"source_db_financial_analytics_password": {
 						"value": "[parameters('source_db_financial_analytics_password')]"
 					},
 					"source_financial_analytics_db_password": {
 						"value": "[parameters('source_financial_analytics_db_password')]"
-					},
-					"snowflake_ls_connectionString": {
-						"value": "[parameters('snowflake_ls_connectionString')]"
 					},
 					"azure_staging_properties_typeProperties_url": {
 						"value": "[parameters('azure_staging_properties_typeProperties_url')]"

@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'azure_staging'"
 		},
+		"snowflake_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'snowflake_ls'"
+		},
 		"source_db_financial_analytics_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_db_financial_analytics'"
@@ -18,10 +22,6 @@
 		"source_financial_analytics_db_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'source_financial_analytics_db'"
-		},
-		"snowflake_ls_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'snowflake_ls'"
 		},
 		"azure_staging_properties_typeProperties_url": {
 			"type": "string",
@@ -56,117 +56,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/azure_staging')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('azure_staging_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('azure_staging_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/source_db_financial_analytics')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"server": "[parameters('source_db_financial_analytics_properties_typeProperties_server')]",
-					"database": "[parameters('source_db_financial_analytics_properties_typeProperties_database')]",
-					"encrypt": "optional",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('source_db_financial_analytics_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('source_db_financial_analytics_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/source_financial_analytics_db')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"server": "[parameters('source_financial_analytics_db_properties_typeProperties_server')]",
-					"database": "[parameters('source_financial_analytics_db_properties_typeProperties_database')]",
-					"encrypt": "optional",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('source_financial_analytics_db_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('source_financial_analytics_db_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/source_control_table')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "source_db_financial_analytics",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "table_name",
-						"type": "varchar"
-					},
-					{
-						"name": "join_key",
-						"type": "varchar"
-					},
-					{
-						"name": "watermark",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "datafactory",
-					"table": "control_table"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/source_db_financial_analytics')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/snowflake_ls')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Snowflake",
-				"typeProperties": {
-					"authenticationType": "Basic",
-					"connectionString": "[parameters('snowflake_ls_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/source_to_staging')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -233,7 +122,7 @@
 										"source": {
 											"type": "SqlServerSource",
 											"sqlReaderQuery": {
-												"value": "@concat('select max(date) from ',item().table_name)",
+												"value": "@concat('select max(date) as watermark from ',item().table_name)",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -356,6 +245,8 @@
 								{
 									"name": "CopyStagingToWarehouse",
 									"type": "Script",
+									"state": "Inactive",
+									"onInactiveMarkAs": "Succeeded",
 									"dependsOn": [
 										{
 											"activity": "CopySourceToStaging",
@@ -380,7 +271,10 @@
 										"scripts": [
 											{
 												"type": "NonQuery",
-												"text": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))"
+												"text": {
+													"value": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))",
+													"type": "Expression"
+												}
 											}
 										],
 										"scriptBlockExecutionTimeout": "02:00:00"
@@ -458,6 +352,117 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/snowflake_ls')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_control_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "source_db_financial_analytics",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "table_name",
+						"type": "varchar"
+					},
+					{
+						"name": "join_key",
+						"type": "varchar"
+					},
+					{
+						"name": "watermark",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "datafactory",
+					"table": "control_table"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/source_db_financial_analytics')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/azure_staging')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('azure_staging_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('azure_staging_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/snowflake_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Snowflake",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"connectionString": "[parameters('snowflake_ls_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_db_financial_analytics')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('source_db_financial_analytics_properties_typeProperties_server')]",
+					"database": "[parameters('source_db_financial_analytics_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('source_db_financial_analytics_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('source_db_financial_analytics_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/source_financial_analytics_db')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('source_financial_analytics_db_properties_typeProperties_server')]",
+					"database": "[parameters('source_financial_analytics_db_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('source_financial_analytics_db_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('source_financial_analytics_db_password')]"
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
