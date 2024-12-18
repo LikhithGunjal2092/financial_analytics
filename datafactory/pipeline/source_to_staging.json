@@ -61,7 +61,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@concat('select max(date) from ',item().table_name)",
+										"value": "@concat('select max(date) as watermark from ',item().table_name)",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
