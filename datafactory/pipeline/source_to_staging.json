@@ -181,6 +181,8 @@
 						{
 							"name": "CopyStagingToWarehouse",
 							"type": "Script",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "CopySourceToStaging",
@@ -205,7 +207,10 @@
 								"scripts": [
 									{
 										"type": "NonQuery",
-										"text": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))"
+										"text": {
+											"value": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))",
+											"type": "Expression"
+										}
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
