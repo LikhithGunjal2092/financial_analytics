@@ -57,7 +57,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/source_to_staging')]",
+			"name": "[concat(parameters('factoryName'), '/source_to_warehouse')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -245,8 +245,6 @@
 								{
 									"name": "CopyStagingToWarehouse",
 									"type": "Script",
-									"state": "Inactive",
-									"onInactiveMarkAs": "Succeeded",
 									"dependsOn": [
 										{
 											"activity": "CopySourceToStaging",
