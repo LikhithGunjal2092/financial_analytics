@@ -181,8 +181,6 @@
 						{
 							"name": "CopyStagingToWarehouse",
 							"type": "Script",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "CopySourceToStaging",
