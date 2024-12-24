@@ -208,7 +208,7 @@
 									{
 										"type": "NonQuery",
 										"text": {
-											"value": "@concat(item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')))",
+											"value": "@concat('delete from ',item().table_name, ' using ( select * from @my_azure_stage/',item().table_name,'/',item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd')),') as cte where cte.',item().joinkey,' = ',item().joinkey,';','insert into ',item().table_name,' select * from @my_azure_stage/',item().table_name,'/',item().table_name,string(formatDateTime(convertFromUtc(utcNow(),'Indian Standard Time'),'yyyyMMdd'))\n)",
 											"type": "Expression"
 										}
 									}
