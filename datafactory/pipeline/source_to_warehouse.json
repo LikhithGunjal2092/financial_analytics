@@ -1,5 +1,5 @@
 {
-	"name": "source_to_staging",
+	"name": "source_to_warehouse",
 	"properties": {
 		"activities": [
 			{
